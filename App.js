@@ -9,6 +9,7 @@ export default function App() {
     const [checkedWord, setCheckedWord] = useState("");
     const [definition, setDefinition] = useState("");
     const [example, setExample] = useState("");
+    const [partOfSpeech, setPartOfSpeech] = useState("");
 
     const searchWord = (text) => {
         setWord(text);
@@ -22,7 +23,7 @@ export default function App() {
                 return data.json()
             })
             .then((res) => {
-                var wordInput = res[0].wordInput
+                var wordInput = res[0].word.toUpperCase()
                 setCheckedWord(wordInput);
 
                 var def = res[0].meanings[0].definitions[0].definition;
@@ -30,6 +31,9 @@ export default function App() {
 
                 var eg = res[0].meanings[0].definitions[0].example;
                 setExample(eg);
+
+                var pts = res[0].meanings[0].partOfSpeech.toUpperCase();
+                setPartOfSpeech(pts);
             });
     };
 
@@ -99,7 +103,8 @@ export default function App() {
                     </View>
 
                     <View>
-                        <Text style={styles.info}>Entered Word: {word}</Text>
+                        <Text style={styles.info}>Entered Word: {checkedWord}</Text>
+                        <Text style={styles.info}>Part Of Speech: {partOfSpeech}</Text>
                         <Text style={styles.info}>Word Definition: {definition}</Text>
                         <Text style={styles.info}>Example (if any): {example}</Text>
                     </View>
